@@ -1,6 +1,6 @@
-#ifndef INCLUDED_Keydefine_h_
+#ifndef INCLUDED_KEYDEFINE_H_
 
-  #define INCLUDED_Keydefine_h_
+  #define INCLUDED_KEYDEFINE_H_
 
   #define NONE    0x00
   #define _______ 0x00
