@@ -35,6 +35,9 @@ void setup() {
   for (byte i = 0; i < rowNum; i++) {
     mcp_right.pinMode(rowPin[i], OUTPUT);
     mcp_left.pinMode(rowPin[i], OUTPUT);
+
+    mcp_right.digitalWrite(rowPin[i], buttonOFF);
+    mcp_left.digitalWrite(rowPin[i], buttonOFF);
   }
 
   for (byte i = 0; i < colNum; i++) {
@@ -50,8 +53,6 @@ void setup() {
       currentState[i][j] = buttonOFF;
       beforeState[i][j] = buttonOFF;
     }
-    mcp_right.digitalWrite(rowPin[i], buttonOFF);
-    mcp_left.digitalWrite(rowPin[i], buttonOFF);
   }
 
   // use the p13 LED as debugging
@@ -64,19 +65,19 @@ void setup() {
   mcp_right.digitalWrite(layerLedPin[0], LOW);
   mcp_left.digitalWrite(layerLedPin[1], LOW);
 
-  delay(200);
+  delay(300);
 }
 
 void loop() {
   for (byte i = 0; i < rowNum * 2; i++) {
-    if (i < 4) {
+    if (i < rowNum) {
       mcp_left.digitalWrite(rowPin[i], buttonON);
     } else {
-      mcp_right.digitalWrite(rowPin[i - 4], buttonON);
+      mcp_right.digitalWrite(rowPin[i - rowNum], buttonON);
     }
 
     for (byte j = 0; j < colNum; j++) {
-      if (i < 4) {
+      if (i < rowNum) {
         currentState[i][j] = mcp_left.digitalRead(colPin[j]);
       } else {
         currentState[i][j] = mcp_right.digitalRead(colPin[j]);
@@ -104,10 +105,10 @@ void loop() {
       }
     }
 
-    if (i < 4) {
+    if (i < rowNum) {
       mcp_left.digitalWrite(rowPin[i], buttonOFF);
     } else {
-      mcp_right.digitalWrite(rowPin[i - 4], buttonOFF);
+      mcp_right.digitalWrite(rowPin[i - rowNum], buttonOFF);
     }
   }
 }
